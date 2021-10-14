@@ -1,5 +1,6 @@
 import {app, BrowserWindow, Menu, globalShortcut, dialog, net} from 'electron'
 import windowStateKeeper from "electron-window-state"
+//import path from 'path'
 
 let update_check_url = 'https://api.github.com/repos/unknown-marketwizards/tradingview-desktop/releases/latest'
 const pkg = require("../../package.json")
@@ -31,6 +32,16 @@ app.on('ready', function () {
         }
     })
     mainWindowStateKeeper.manage(mainWindow);
+
+    /*
+    if (app.isPackaged) {
+        mainWindow.loadFile(path.join(__dirname, '../render/index.html'))
+    } else {
+        mainWindow.maximize()
+        mainWindow.webContents.openDevTools()
+        mainWindow.loadURL(`http://localhost:${process.env.PORT}`)
+    }
+    */
 
     /* shortcut */
     globalShortcut.register('F5', function () {

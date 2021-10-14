@@ -1,15 +1,20 @@
-require('dotenv').config({ path: join(__dirname, '.env') })
+require('dotenv').config({ path: path.join(__dirname, '.env') })
 
-import { join } from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import vuetify from '@vuetify/vite-plugin'
+
+import path from 'path'
+
+const srcPath = path.resolve(__dirname, 'src', 'styles', 'variables.scss')
 
 export default defineConfig(env => {
   return {
     plugins: [
       vue(),
+      vuetify({autoImport: true}), // Enabled by default
     ],
-    root: join(__dirname, 'src/render'),
+    root: path.join(__dirname, 'src/render'),
     base: './',
     server: {
       port: +process.env.PORT,
@@ -17,15 +22,21 @@ export default defineConfig(env => {
     resolve: {
       alias: {
         '@root': __dirname,
-        '@': join(__dirname, 'src'),
+        '@': path.join(__dirname, 'src'),
       },
     },
     build: {
-      outDir: join(__dirname, 'dist/render'),
+      outDir: path.join(__dirname, 'dist/render'),
       emptyOutDir: true,
       minify: false,
       commonjsOptions: {},
       sourcemap: true,
+    },
+    css: {
+        preprocessorOptions: {
+            sass: {additionalData: `@import ${srcPath}\n`},
+            scss: {additionalData: `@import ${srcPath};\n`},
+        },
     },
   }
 })

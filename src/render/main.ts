@@ -1,10 +1,7 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue'
+import vuetify from './plugins/vuetify'
 import App from './App.vue'
-import './index.css'
 
 createApp(App)
-.mount('#app')
-.$nextTick(window.removeLoading)
-
-console.log('fs', window.fs)
-console.log('ipcRenderer', window.ipcRenderer)
+    .use(vuetify)
+    .mount('#app')
